@@ -29,6 +29,21 @@ public class Fetch {
 		}
 		return obList;
 	}
+	
+	public String setDateTime(int id) {
+		mysqlDB = new MySqlDB();
+		String obDate = null;
+		try {
+			ResultSet rs = mysqlDB.executeQuery("select Date_format(date_time, \"%Y-%m-%d %h:%i:%s %p\") as date_time from room where id = " + id);
+			while (rs.next()) {
+				obDate = rs.getString("date_time");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return obDate;
+	}
 
 	public ObservableList<Room> setRecord(int id, Label lRoom, Label lPersonCount, Label lSection) {
 		mysqlDB = new MySqlDB();
@@ -36,7 +51,10 @@ public class Fetch {
 		try {
 			ResultSet rs = mysqlDB.executeQuery("select * from room where id =" + id);
 			while (rs.next()) {
-				Room r = new Room(rs.getInt("room"), rs.getInt("person_count"), rs.getInt("section"));
+				Room r = new Room();
+				r.setRoom(rs.getInt("room"));
+				r.setPersonCount(rs.getInt("person_count"));
+				r.setSection(rs.getInt("section"));
 				ob.add(r);
 				lRoom.setText(String.valueOf(r.getRoom()));
 				lPersonCount.setText(String.valueOf(r.getPersonCount()));

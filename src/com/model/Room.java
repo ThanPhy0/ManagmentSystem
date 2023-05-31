@@ -5,13 +5,6 @@ public class Room {
 	private int personCount;
 	private int section;
 
-	public Room(int room, int personCount, int section) {
-		super();
-		this.room = room;
-		this.personCount = personCount;
-		this.section = section;
-	}
-
 	public int getRoom() {
 		return room;
 	}

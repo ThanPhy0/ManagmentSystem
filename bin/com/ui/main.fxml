@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -19,7 +20,7 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="539.0" prefWidth="711.0">
                      <children>
                         <ListView fx:id="listView" layoutX="14.0" layoutY="14.0" prefHeight="479.0" prefWidth="183.0" />
-                        <Label fx:id="datetime" layoutX="236.0" layoutY="36.0" prefHeight="16.0" prefWidth="221.0" text="Date Time">
+                        <Label fx:id="datetime" layoutX="236.0" layoutY="36.0" prefHeight="20.0" prefWidth="446.0" text="Date Time">
                            <font>
                               <Font size="16.0" />
                            </font></Label>
@@ -70,6 +71,7 @@
                               <TableColumn fx:id="colPrice" prefWidth="78.0" text="Price" />
                           </columns>
                         </TableView>
+                        <Button layoutX="826.0" layoutY="12.0" mnemonicParsing="false" onAction="#newRoom" prefHeight="48.0" prefWidth="94.0" text="New" />
                      </children>
                   </AnchorPane>
             </content>
@@ -84,8 +86,11 @@
                             <TableColumn fx:id="menuPrice" minWidth="0.0" prefWidth="125.0" text="Price" />
                           </columns>
                         </TableView>
-                        <Button layoutX="363.0" layoutY="465.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="60.0" text="Add" />
-                        <Button layoutX="363.0" layoutY="432.0" mnemonicParsing="false" text="Delete" />
+                        <Button layoutX="632.0" layoutY="173.0" mnemonicParsing="false" onAction="#insertNewMenu" prefHeight="26.0" prefWidth="60.0" text="Add" />
+                        <Button layoutX="546.0" layoutY="173.0" mnemonicParsing="false" onAction="#updateMenuItem" prefHeight="26.0" prefWidth="73.0" text="Update" />
+                        <TextField fx:id="menuNameInput" layoutX="472.0" layoutY="92.0" prefHeight="26.0" prefWidth="220.0" promptText="Name" />
+                        <TextField fx:id="menuPriceInput" layoutX="472.0" layoutY="130.0" prefHeight="26.0" prefWidth="220.0" promptText="Price" />
+                        <Button layoutX="364.0" layoutY="465.0" mnemonicParsing="false" onAction="#editMenuItem" prefHeight="26.0" prefWidth="73.0" text="Edit" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -93,9 +98,11 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="296.0" prefWidth="611.0">
                      <children>
-                        <Button layoutX="307.0" layoutY="464.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="60.0" text="Add" />
-                        <Button layoutX="307.0" layoutY="431.0" mnemonicParsing="false" text="Delete" />
+                        <Button layoutX="582.0" layoutY="179.0" mnemonicParsing="false" onAction="#insertNewGirls" prefHeight="26.0" prefWidth="60.0" text="Add" />
+                        <Button layoutX="492.0" layoutY="179.0" mnemonicParsing="false" onAction="#updateGirlsItem" prefHeight="26.0" prefWidth="77.0" text="Update" />
                         <ListView fx:id="girls" layoutX="26.0" layoutY="23.0" prefHeight="467.0" prefWidth="260.0" />
+                        <TextField fx:id="girlsNameInput" layoutX="459.0" layoutY="130.0" prefHeight="26.0" prefWidth="233.0" promptText="Name" />
+                        <Button layoutX="297.0" layoutY="464.0" mnemonicParsing="false" onAction="#editGirlsItem" prefHeight="26.0" prefWidth="63.0" text="Edit" />
                      </children>
                   </AnchorPane>
                </content>

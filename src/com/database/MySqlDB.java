@@ -16,7 +16,7 @@ public class MySqlDB implements Repository {
 	public static Repository repo = new MySqlDB();
 
 	Connection con;
-	PreparedStatement prepStmt;
+//	PreparedStatement prepStmt;
 	Statement stmt;
 
 	public static Repository getInstance() {
@@ -40,5 +40,13 @@ public class MySqlDB implements Repository {
 		}
 
 		return stmt.executeQuery(query);
+	}
+
+	@Override
+	public PreparedStatement insertQuery(String query) throws SQLException {
+		// TODO Auto-generated method stub
+		con = getConnection();
+		PreparedStatement prepStmt = con.prepareStatement(query);
+		return prepStmt;
 	}
 }

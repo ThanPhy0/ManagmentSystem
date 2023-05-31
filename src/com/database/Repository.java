@@ -1,5 +1,6 @@
 package com.database;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -9,5 +10,7 @@ public interface Repository {
 	}
 
 	ResultSet executeQuery(String query) throws SQLException;
+
+	PreparedStatement insertQuery(String query) throws SQLException;
 
 }

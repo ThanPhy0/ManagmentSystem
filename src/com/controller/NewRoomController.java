@@ -1,7 +1,6 @@
 package com.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.database.Fetch;
@@ -9,7 +8,9 @@ import com.database.GirlsList;
 import com.database.MenuItems;
 import com.database.MySqlDB;
 import com.model.Menu;
+import com.model.OrderTable;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -53,6 +54,24 @@ public class NewRoomController implements Initializable {
 	@FXML
 	private Label orderName;
 
+	@FXML
+	private Label orderPrice;
+
+	@FXML
+	private TableView<OrderTable> orderTable;
+
+	@FXML
+	private TableColumn<OrderTable, String> colOrderName;
+
+	@FXML
+	private TableColumn<OrderTable, Integer> colOrderQuantity;
+
+	@FXML
+	private TableColumn<OrderTable, Integer> colOrderPrice;
+
+	@FXML
+	private ListView<String> inviteGirls;
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
@@ -79,6 +98,10 @@ public class NewRoomController implements Initializable {
 
 		ObservableList<String> obGirls = gList.listGirls();
 		girlsList.setItems(obGirls);
+
+		colOrderName.setCellValueFactory(new PropertyValueFactory<OrderTable, String>("name"));
+		colOrderQuantity.setCellValueFactory(new PropertyValueFactory<OrderTable, Integer>("quantity"));
+		colOrderPrice.setCellValueFactory(new PropertyValueFactory<OrderTable, Integer>("price"));
 	}
 
 	@FXML
@@ -87,8 +110,31 @@ public class NewRoomController implements Initializable {
 			Menu selectedItem = menuTable.getSelectionModel().getSelectedItem();
 			if (selectedItem != null) {
 				orderName.setText(selectedItem.getName());
+				orderPrice.setText(String.valueOf(selectedItem.getPrice()));
 			}
 		}
+	}
+
+	@FXML
+	public void girlsListClick(MouseEvent event) {
+		if (event.getClickCount() == 2) {
+			String girlName = girlsList.getSelectionModel().getSelectedItem().toString();
+			if (girlName != null) {
+				ObservableList<String> obG = girlsList.getItems();
+				obG.add(girlName);
+				inviteGirls.getItems().add(girlName);
+			}
+		}
+	}
+
+	public void addtoCart() {
+		OrderTable order = new OrderTable(orderName.getText(), Integer.valueOf(orderPrice.getText()),
+				Integer.valueOf(orderPrice.getText()));
+		ObservableList<OrderTable> obList = orderTable.getItems();
+		obList.add(order);
+
+		orderTable.setItems(obList);
+
 	}
 
 }

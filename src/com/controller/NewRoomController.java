@@ -10,7 +10,6 @@ import com.database.MySqlDB;
 import com.model.Menu;
 import com.model.OrderTable;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -120,21 +119,23 @@ public class NewRoomController implements Initializable {
 		if (event.getClickCount() == 2) {
 			String girlName = girlsList.getSelectionModel().getSelectedItem().toString();
 			if (girlName != null) {
-				ObservableList<String> obG = girlsList.getItems();
-				obG.add(girlName);
 				inviteGirls.getItems().add(girlName);
 			}
 		}
 	}
 
 	public void addtoCart() {
-		OrderTable order = new OrderTable(orderName.getText(), Integer.valueOf(orderPrice.getText()),
-				Integer.valueOf(orderPrice.getText()));
-		ObservableList<OrderTable> obList = orderTable.getItems();
-		obList.add(order);
-
-		orderTable.setItems(obList);
-
+		if (orderName.getText().isEmpty() || orderPrice.getText().isEmpty()) {
+			System.out.println("double click to you order item");
+		} else {
+			OrderTable order = new OrderTable(orderName.getText(), quantity.getValue(),
+					Integer.valueOf(orderPrice.getText()));
+			ObservableList<OrderTable> obList = orderTable.getItems();
+			obList.add(order);
+			orderTable.setItems(obList);
+			orderName.setText("");
+			orderPrice.setText("");
+			quantity.getValueFactory().setValue(1);
+		}
 	}
-
 }

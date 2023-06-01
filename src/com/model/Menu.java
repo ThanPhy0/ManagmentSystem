@@ -20,4 +20,14 @@ public class Menu {
 		this.price = price;
 	}
 
+	@Override
+	public String toString() {
+		return name;
+//		return name + " - $" + price;
+	}
+	
+	public int getPriceAsString() {
+	    return price;
+	}
+
 }

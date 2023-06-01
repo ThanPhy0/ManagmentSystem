@@ -30,6 +30,21 @@ public class MenuItems {
 		}
 		return obMenu;
 	}
+	
+	public int getPrice(String name) {
+		mysqlDB = new MySqlDB();
+		int price = 0;
+		try {
+			ResultSet rs = mysqlDB.executeQuery("select * from menu where name = " + name);
+			while (rs.next()) {
+				price = rs.getInt("price");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return price;
+	}
 
 	public void add(Menu menu) {
 		mysqlDB = new MySqlDB();

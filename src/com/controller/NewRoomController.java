@@ -21,6 +21,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
@@ -71,6 +72,12 @@ public class NewRoomController implements Initializable {
 	@FXML
 	private ListView<String> inviteGirls;
 
+	@FXML
+	private ComboBox<Menu> menuNames;
+
+	@FXML
+	private TextField orderQuantity;
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
@@ -78,6 +85,7 @@ public class NewRoomController implements Initializable {
 		MySqlDB mysqlDB = new MySqlDB();
 		MenuItems menuItems = new MenuItems();
 		GirlsList gList = new GirlsList();
+		Menu menu = new Menu();
 
 		ObservableList<Integer> obRoom = fetch.getRoom();
 		roomList.setItems(obRoom);
@@ -95,12 +103,32 @@ public class NewRoomController implements Initializable {
 		colPrice.setCellValueFactory(new PropertyValueFactory<Menu, Integer>("price"));
 		menuTable.setItems(obMenu);
 
+		ObservableList<Menu> obMite = menuItems.setMenu();
+		menuNames.setItems(obMite);
+
 		ObservableList<String> obGirls = gList.listGirls();
 		girlsList.setItems(obGirls);
 
 		colOrderName.setCellValueFactory(new PropertyValueFactory<OrderTable, String>("name"));
 		colOrderQuantity.setCellValueFactory(new PropertyValueFactory<OrderTable, Integer>("quantity"));
 		colOrderPrice.setCellValueFactory(new PropertyValueFactory<OrderTable, Integer>("price"));
+	}
+
+	public void orderAdd() {
+		MenuItems menuItems = new MenuItems();
+		Menu selectedItem = menuNames.getSelectionModel().getSelectedItem();
+		if (menuNames != null) {
+			String name = selectedItem.toString();
+			int price = selectedItem.getPriceAsString();
+			OrderTable order = new OrderTable(name,
+					Integer.valueOf(orderQuantity.getText()), price);
+			ObservableList<OrderTable> ob = orderTable.getItems();
+			ob.add(order);
+			orderTable.setItems(ob);
+			orderQuantity.setText("");
+		} else {
+			System.out.println("choose menu!");
+		}
 	}
 
 	@FXML

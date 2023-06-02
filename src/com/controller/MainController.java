@@ -15,7 +15,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
@@ -24,10 +26,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 
 public class MainController implements Initializable {
 	// Orders Tab
+	@FXML
+	private GridPane gridPane;
+
 	@FXML
 	private ListView<Integer> listView;
 
@@ -91,7 +98,7 @@ public class MainController implements Initializable {
 		Fetch fetch = new Fetch();
 		ObservableList<Integer> obList = fetch.getRoom();
 		listView.setItems(obList);
-
+		GridPaneSetUp(fetch.getRoom().size());
 		// Orders Tab
 		colOrders.setCellValueFactory(new PropertyValueFactory<Orders, String>("name"));
 		colQuantity.setCellValueFactory(new PropertyValueFactory<Orders, Integer>("quantity"));
@@ -100,6 +107,45 @@ public class MainController implements Initializable {
 		// Menu Tab
 		menuName.setCellValueFactory(new PropertyValueFactory<Menu, String>("name"));
 		menuPrice.setCellValueFactory(new PropertyValueFactory<Menu, Integer>("price"));
+	}
+
+	public void GridPaneSetUp(int rooms) {
+		gridPane.setPadding(new Insets(10));
+		gridPane.setHgap(10);
+		gridPane.setVgap(10);
+		int numCols = 2;
+		int numRows = (rooms + numCols - 1) / numCols;
+
+		int i = 1;
+		for (int row = 0; row < numRows; row++) {
+			RowConstraints rowConstraints = new RowConstraints();
+			rowConstraints.setPercentHeight(100.0 / numRows);
+			gridPane.getRowConstraints().add(rowConstraints);
+			for (int col = 0; col < numCols; col++) {
+				if (i > rooms) {
+					break; // Stop adding buttons if we have reached the total number of rooms
+				}
+				Button button = new Button(String.valueOf(i));
+				button.setPrefWidth(40);
+				button.setPrefHeight(40);
+				gridPane.add(button, col, row);
+				button.setOnMouseClicked(event -> {
+					if (event.getClickCount() == 2) {
+						int btnId = Integer.valueOf(button.getText());
+						System.out.println(button.getText());
+						Fetch fetch = new Fetch();
+						datetime.setText(String.valueOf(fetch.setDateTime(btnId)));
+						fetch.setRecord(btnId, room, personCount, section);
+						ObservableList<Orders> obOrders = fetch.setOrders(btnId);
+						ObservableList<String> obGirls = fetch.setGirls(btnId);
+						orderTable.setItems(obOrders);
+						listGirls.setItems(obGirls);
+					}
+				});
+
+				i++;
+			}
+		}
 	}
 
 	// Orders Tab

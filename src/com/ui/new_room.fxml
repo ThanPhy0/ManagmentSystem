@@ -11,81 +11,90 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="648.0" prefWidth="932.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.NewRoomController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="422.0"
+	prefWidth="932.0" xmlns="http://javafx.com/javafx/8.0.171"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.controller.NewRoomController">
 	<children>
-		<ComboBox fx:id="roomList" layoutX="34.0" layoutY="63.0" prefHeight="26.0" prefWidth="120.0" />
-		<ComboBox fx:id="personCount" layoutX="34.0" layoutY="115.0" prefHeight="26.0" prefWidth="120.0" />
-		<Label layoutX="34.0" layoutY="43.0" prefHeight="20.0" prefWidth="104.0" text="Room : ">
+		<ComboBox fx:id="roomList" layoutX="34.0" layoutY="63.0"
+			prefHeight="26.0" prefWidth="120.0" />
+		<ComboBox fx:id="personCount" layoutX="34.0" layoutY="115.0"
+			prefHeight="26.0" prefWidth="120.0" />
+		<Label layoutX="34.0" layoutY="43.0" prefHeight="20.0"
+			prefWidth="104.0" text="Room : ">
 			<font>
 				<Font size="16.0" />
 			</font>
 		</Label>
-		<Label layoutX="34.0" layoutY="95.0" prefHeight="20.0" prefWidth="104.0" text="Person :">
+		<Label layoutX="34.0" layoutY="95.0" prefHeight="20.0"
+			prefWidth="104.0" text="Person :">
 			<font>
 				<Font size="16.0" />
 			</font>
 		</Label>
-		<Label layoutX="34.0" layoutY="151.0" prefHeight="20.0" prefWidth="104.0" text="Section :">
+		<Label layoutX="34.0" layoutY="151.0" prefHeight="20.0"
+			prefWidth="104.0" text="Section :">
 			<font>
 				<Font size="16.0" />
 			</font>
 		</Label>
-		<Spinner fx:id="sectionTime" layoutX="34.0" layoutY="171.0" prefHeight="26.0" prefWidth="83.0" />
-		<TableView fx:id="menuTable" layoutX="169.0" layoutY="63.0" onMouseClicked="#tableClick" prefHeight="264.0" prefWidth="205.0">
+		<Spinner fx:id="sectionTime" layoutX="34.0" layoutY="171.0"
+			prefHeight="26.0" prefWidth="83.0" />
+		<Label layoutX="34.0" layoutY="213.0" prefHeight="20.0"
+			prefWidth="104.0" text="Menu :">
+			<font>
+				<Font size="16.0" />
+			</font>
+		</Label>
+		<Label layoutX="34.0" layoutY="279.0" prefHeight="20.0"
+			prefWidth="104.0" text="Girls :">
+			<font>
+				<Font size="16.0" />
+			</font>
+		</Label>
+		<Label layoutX="384.0" layoutY="46.0" prefHeight="20.0"
+			prefWidth="104.0" text="Orders :">
+			<font>
+				<Font size="16.0" />
+			</font>
+		</Label>
+		<Button layoutX="34.0" layoutY="342.0" mnemonicParsing="false"
+			prefHeight="49.0" prefWidth="264.0" text="Save" />
+		<Label layoutX="126.0" layoutY="174.0" prefHeight="20.0"
+			prefWidth="36.0" text="Hr">
+			<font>
+				<Font size="16.0" />
+			</font>
+		</Label>
+		<TableView fx:id="orderTable" layoutX="384.0" layoutY="66.0"
+			prefHeight="276.0" prefWidth="304.0">
 			<columns>
-				<TableColumn fx:id="colName" prefWidth="123.0" text="Name" />
-				<TableColumn fx:id="colPrice" prefWidth="81.0" text="Price" />
+				<TableColumn fx:id="colOrderName" prefWidth="123.0"
+					text="Name" />
+				<TableColumn fx:id="colOrderQuantity" prefWidth="81.0"
+					text="Quantity" />
+				<TableColumn fx:id="colOrderPrice" prefWidth="100.0"
+					text="Price" />
 			</columns>
 		</TableView>
-		<ListView fx:id="girlsList" layoutX="169.0" layoutY="363.0" onMouseClicked="#girlsListClick" prefHeight="264.0" prefWidth="205.0" />
-		<Label layoutX="169.0" layoutY="43.0" prefHeight="20.0" prefWidth="104.0" text="Menu :">
+		<ListView fx:id="inviteGirls" layoutX="701.0" layoutY="65.0"
+			prefHeight="276.0" prefWidth="205.0" />
+		<Label layoutX="701.0" layoutY="46.0" prefHeight="20.0"
+			prefWidth="104.0" text="Invite Girls :">
 			<font>
 				<Font size="16.0" />
 			</font>
 		</Label>
-		<Label layoutX="169.0" layoutY="341.0" prefHeight="20.0" prefWidth="104.0" text="Girls :">
-			<font>
-				<Font size="16.0" />
-			</font>
-		</Label>
-		<Label layoutX="384.0" layoutY="46.0" prefHeight="20.0" prefWidth="104.0" text="Orders :">
-			<font>
-				<Font size="16.0" />
-			</font>
-		</Label>
-		<Button layoutX="802.0" layoutY="571.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="104.0" text="Button" />
-      <Label layoutX="126.0" layoutY="174.0" prefHeight="20.0" prefWidth="36.0" text="Hr">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <TableView fx:id="orderTable" layoutX="384.0" layoutY="66.0" onMouseClicked="#tableClick" prefHeight="276.0" prefWidth="304.0">
-         <columns>
-            <TableColumn fx:id="colOrderName" prefWidth="123.0" text="Name" />
-            <TableColumn fx:id="colOrderQuantity" prefWidth="81.0" text="Quantity" />
-            <TableColumn fx:id="colOrderPrice" prefWidth="100.0" text="Price" />
-         </columns>
-      </TableView>
-      <Label fx:id="orderName" layoutX="447.0" layoutY="363.0" prefHeight="20.0" prefWidth="120.0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Spinner fx:id="quantity" layoutX="584.0" layoutY="386.0" prefHeight="26.0" prefWidth="83.0" />
-      <Button layoutX="563.0" layoutY="425.0" mnemonicParsing="false" onAction="#addtoCart" prefHeight="49.0" prefWidth="104.0" text="Add to cart" />
-      <Label fx:id="orderPrice" layoutX="447.0" layoutY="399.0" prefHeight="20.0" prefWidth="120.0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <ListView fx:id="inviteGirls" layoutX="701.0" layoutY="65.0" onMouseClicked="#girlsListClick" prefHeight="276.0" prefWidth="205.0" />
-      <Label layoutX="701.0" layoutY="46.0" prefHeight="20.0" prefWidth="104.0" text="Invite Girls :">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <ComboBox fx:id="menuNames" layoutX="406.0" layoutY="513.0" prefHeight="26.0" prefWidth="120.0" />
-      <TextField fx:id="orderQuantity" layoutX="530.0" layoutY="513.0" prefHeight="26.0" prefWidth="70.0" />
-      <Button layoutX="607.0" layoutY="515.0" mnemonicParsing="false" onAction="#orderAdd" prefHeight="26.0" prefWidth="63.0" text="Add" />
+		<ComboBox fx:id="menuNames" layoutX="33.0" layoutY="233.0"
+			prefHeight="26.0" prefWidth="120.0" />
+		<TextField fx:id="orderQuantity" layoutX="157.0"
+			layoutY="233.0" prefHeight="26.0" prefWidth="70.0" />
+		<Button layoutX="234.0" layoutY="235.0" mnemonicParsing="false"
+			onAction="#orderAdd" prefHeight="26.0" prefWidth="63.0" text="Add" />
+		<ComboBox fx:id="girlNames" layoutX="32.0" layoutY="299.0"
+			prefHeight="26.0" prefWidth="120.0" />
+		<Button layoutX="162.0" layoutY="299.0" mnemonicParsing="false"
+			onAction="#girlsAdd" prefHeight="26.0" prefWidth="63.0" text="Add" />
 	</children>
 </AnchorPane>

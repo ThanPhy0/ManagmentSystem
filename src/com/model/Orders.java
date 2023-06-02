@@ -36,4 +36,10 @@ public class Orders {
 		this.price = price;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return name;
+	}
+
 }

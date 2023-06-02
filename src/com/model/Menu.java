@@ -1,6 +1,7 @@
 package com.model;
 
 public class Menu {
+	private int id;
 	private String name;
 	private int price;
 
@@ -20,14 +21,22 @@ public class Menu {
 		this.price = price;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	@Override
 	public String toString() {
 		return name;
 //		return name + " - $" + price;
 	}
-	
+
 	public int getPriceAsString() {
-	    return price;
+		return price;
 	}
 
 }

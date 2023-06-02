@@ -1,9 +1,12 @@
 package com.model;
 
+import java.time.LocalDate;
+
 public class Room {
 	private int room;
 	private int personCount;
 	private int section;
+	private LocalDate date;
 
 	public int getRoom() {
 		return room;
@@ -27,6 +30,14 @@ public class Room {
 
 	public void setSection(int section) {
 		this.section = section;
+	}
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
 
 }

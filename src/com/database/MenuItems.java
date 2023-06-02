@@ -31,19 +31,34 @@ public class MenuItems {
 		return obMenu;
 	}
 	
-	public int getPrice(String name) {
+//	public int getPrice(String name) {
+//		mysqlDB = new MySqlDB();
+//		int price = 0;
+//		try {
+//			ResultSet rs = mysqlDB.executeQuery("select * from menu where name = " + name);
+//			while (rs.next()) {
+//				price = rs.getInt("price");
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return price;
+//	}
+	
+	public int getMenuId(String name) {
 		mysqlDB = new MySqlDB();
-		int price = 0;
+		int id = 0;
 		try {
-			ResultSet rs = mysqlDB.executeQuery("select * from menu where name = " + name);
+			ResultSet rs = mysqlDB.executeQuery("select * from menu where name =" + "\"" + name + "\"");
 			while (rs.next()) {
-				price = rs.getInt("price");
+				id = rs.getInt("id");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return price;
+		return id;
 	}
 
 	public void add(Menu menu) {

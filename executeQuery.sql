@@ -7,3 +7,7 @@ select room.room, girls.name from room join invite_girls on room.id = invite_gir
 
 
 select * from girls;
+
+select * from menu where name = "water";
+
+select * from girls;

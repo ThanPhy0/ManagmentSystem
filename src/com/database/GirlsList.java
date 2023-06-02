@@ -27,6 +27,21 @@ public class GirlsList {
 		}
 		return obGirls;
 	}
+	
+	public int getGirlId(String name) {
+		mysqlDB = new MySqlDB();
+		int id = 0;
+		try {
+			ResultSet rs = mysqlDB.executeQuery("select * from girls where name =" + "\"" + name + "\"");
+			while (rs.next()) {
+				id = rs.getInt("id");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return id;
+	}
 
 	public void add(Girls girls) {
 		mysqlDB = new MySqlDB();

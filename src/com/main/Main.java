@@ -20,7 +20,7 @@ public class Main extends Application {
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 //		primaryStage.getIcons().add(new Image("com/coder/balance/resource/sing.jpg"));
-		primaryStage.setResizable(false);
+//		primaryStage.setResizable(false);
 		primaryStage.setTitle("Managment System");
 		primaryStage.show();
 	}

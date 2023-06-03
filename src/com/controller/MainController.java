@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -28,6 +29,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class MainController implements Initializable {
@@ -36,7 +38,7 @@ public class MainController implements Initializable {
 	private GridPane gridPane;
 
 	@FXML
-	private ListView<Integer> listView;
+	private RowConstraints rowConstraints;
 
 	@FXML
 	private Label datetime;
@@ -96,9 +98,8 @@ public class MainController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		Fetch fetch = new Fetch();
-		ObservableList<Integer> obList = fetch.getRoom();
-		listView.setItems(obList);
 		GridPaneSetUp(fetch.getRoom().size());
+//		grid();
 		// Orders Tab
 		colOrders.setCellValueFactory(new PropertyValueFactory<Orders, String>("name"));
 		colQuantity.setCellValueFactory(new PropertyValueFactory<Orders, Integer>("quantity"));
@@ -110,16 +111,18 @@ public class MainController implements Initializable {
 	}
 
 	public void GridPaneSetUp(int rooms) {
+		Fetch fetch = new Fetch();
 		gridPane.setPadding(new Insets(10));
 		gridPane.setHgap(10);
-		gridPane.setVgap(10);
+		gridPane.setVgap(30);
+
 		int numCols = 2;
 		int numRows = (rooms + numCols - 1) / numCols;
 
 		int i = 1;
 		for (int row = 0; row < numRows; row++) {
 			RowConstraints rowConstraints = new RowConstraints();
-			rowConstraints.setPercentHeight(100.0 / numRows);
+			rowConstraints.setPercentHeight(100.0 / fetch.getRoom().size());
 			gridPane.getRowConstraints().add(rowConstraints);
 			for (int col = 0; col < numCols; col++) {
 				if (i > rooms) {
@@ -133,7 +136,6 @@ public class MainController implements Initializable {
 					if (event.getClickCount() == 2) {
 						int btnId = Integer.valueOf(button.getText());
 						System.out.println(button.getText());
-						Fetch fetch = new Fetch();
 						datetime.setText(String.valueOf(fetch.setDateTime(btnId)));
 						fetch.setRecord(btnId, room, personCount, section);
 						ObservableList<Orders> obOrders = fetch.setOrders(btnId);
@@ -148,24 +150,23 @@ public class MainController implements Initializable {
 		}
 	}
 
-	// Orders Tab
-	public void setItem() {
-		if (listView.getSelectionModel().getSelectedItem() == null) {
-			System.out.println("Select a item!");
-		} else {
-			int id = listView.getSelectionModel().getSelectedItem();
+	public void grid() {
+		gridPane.setPadding(new Insets(10));
+		gridPane.setHgap(10);
+		gridPane.setVgap(10);
 
-			if (listView.getSelectionModel().getSelectedItem() == id) {
-				Fetch fetch = new Fetch();
-//				ObservableList<Room> ob = mysqlDB.setRecord(id, room, personCount, section);
-				datetime.setText(String.valueOf(fetch.setDateTime(id)));
-				fetch.setRecord(id, room, personCount, section);
-				ObservableList<Orders> obOrders = fetch.setOrders(id);
-				ObservableList<String> obGirls = fetch.setGirls(id);
-				orderTable.setItems(obOrders);
-				listGirls.setItems(obGirls);
+		VBox vBox = new VBox();
+		vBox.setSpacing(10);
 
-			}
+		int a = 0;
+		for (int i = 0; i < 6; i++) {
+			Button btn = new Button(String.valueOf(a));
+			vBox.getChildren().add(btn);
+
+			ScrollPane scrollPane = new ScrollPane(vBox);
+			scrollPane.setFitToHeight(true);
+
+			gridPane.add(scrollPane, 0, 0);
 		}
 	}
 

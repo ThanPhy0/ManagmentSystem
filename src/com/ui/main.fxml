@@ -14,13 +14,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="782.0" prefWidth="977.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.MainController">
    <children>
-      <TabPane layoutX="14.0" layoutY="21.0" prefHeight="547.0" prefWidth="943.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="14.0" layoutY="11.0" prefHeight="761.0" prefWidth="937.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Orders">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="404.0" prefWidth="943.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="728.0" prefWidth="983.0">
                      <children>
                         <Label fx:id="datetime" layoutX="236.0" layoutY="36.0" prefHeight="20.0" prefWidth="446.0" text="Date Time">
                            <font>
@@ -65,7 +65,6 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Button layoutX="253.0" layoutY="375.0" mnemonicParsing="false" onAction="#setItem" prefHeight="26.0" prefWidth="102.0" text="Set" />
                         <TableView fx:id="orderTable" layoutX="416.0" layoutY="107.0" prefHeight="259.0" prefWidth="262.0">
                           <columns>
                             <TableColumn fx:id="colOrders" prefWidth="107.0" text="Orders" />
@@ -74,16 +73,23 @@
                           </columns>
                         </TableView>
                         <Button layoutX="826.0" layoutY="12.0" mnemonicParsing="false" onAction="#newRoom" prefHeight="48.0" prefWidth="94.0" text="New" />
-                        <GridPane fx:id="gridPane" hgap="10.0" layoutX="20.0" layoutY="23.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" vgap="10.0">
+                        <GridPane fx:id="gridPane" layoutX="40.0" layoutY="34.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="268.0" prefWidth="136.0" AnchorPane.bottomAnchor="426.0" AnchorPane.topAnchor="34.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="10.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="10.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="10.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                         </GridPane>
                      </children>
@@ -124,6 +130,5 @@
             <Tab text="About" />
         </tabs>
       </TabPane>
-      <ListView fx:id="listView" layoutX="981.0" layoutY="21.0" prefHeight="479.0" prefWidth="183.0" />
    </children>
 </AnchorPane>

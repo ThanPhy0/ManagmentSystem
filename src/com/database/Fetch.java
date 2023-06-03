@@ -29,12 +29,31 @@ public class Fetch {
 		}
 		return obList;
 	}
-	
+
+	// get value 1 is true
+	// get value 0 is false
+	public int getActiveStatus(int id) {
+		// TODO Auto-generated method stub
+		mysqlDB = new MySqlDB();
+		int i = 0;
+		try {
+			ResultSet rs = mysqlDB.executeQuery("select active from room where id = " + id);
+			while (rs.next()) {
+				i = rs.getInt("active");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return i;
+	}
+
 	public String setDateTime(int id) {
 		mysqlDB = new MySqlDB();
 		String obDate = null;
 		try {
-			ResultSet rs = mysqlDB.executeQuery("select Date_format(date_time, \"%Y-%m-%d %h:%i:%s %p\") as date_time from room where id = " + id);
+			ResultSet rs = mysqlDB.executeQuery(
+					"select Date_format(date_time, \"%Y-%m-%d %h:%i:%s %p\") as date_time from room where id = " + id);
 			while (rs.next()) {
 				obDate = rs.getString("date_time");
 			}

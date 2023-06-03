@@ -2,6 +2,9 @@ package com.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import com.database.Fetch;
@@ -11,6 +14,7 @@ import com.model.Girls;
 import com.model.Menu;
 import com.model.Orders;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,6 +46,9 @@ public class MainController implements Initializable {
 
 	@FXML
 	private Label datetime;
+
+	@FXML
+	private Label currentDateTime;
 
 	@FXML
 	private Label room;
@@ -97,6 +104,9 @@ public class MainController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
+		LocalDateTime datetime = LocalDateTime.now();
+		currentDateTime.setText(datetime.format(DateTimeFormatter.ofPattern("dd MMM uuuu - hh:mm:ss a")));
+
 		Fetch fetch = new Fetch();
 		GridPaneSetUp(fetch.getRoom().size());
 //		grid();
@@ -131,6 +141,11 @@ public class MainController implements Initializable {
 				Button button = new Button(String.valueOf(i));
 				button.setPrefWidth(40);
 				button.setPrefHeight(40);
+				if (fetch.getActiveStatus(Integer.valueOf(button.getText())) == 1) {
+					button.setStyle("-fx-background-color: #00fc17;");
+				} else if (fetch.getActiveStatus(Integer.valueOf(button.getText())) == 0) {
+					button.setStyle("-fx-background-color: #ff0000;");
+				}
 				gridPane.add(button, col, row);
 				button.setOnMouseClicked(event -> {
 					if (event.getClickCount() == 2) {

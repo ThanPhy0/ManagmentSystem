@@ -1,7 +1,7 @@
 package com.controller;
 
 import java.net.URL;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 import com.database.Fetch;
@@ -107,13 +107,14 @@ public class NewRoomController implements Initializable {
 
 	// SaveNewRoom
 	public void SaveNewRoom() {
+		LocalDateTime datetime = LocalDateTime.now();
+
 		NewRoomOrders roomOrders = new NewRoomOrders();
 //		//Room
 		Room room = new Room();
 		room.setRoom(Integer.valueOf(roomNumber.getText()));
 		room.setPersonCount(personCount.getValue());
 		room.setSection(sectionTime.getValue());
-		room.setDate(LocalDate.now());
 		roomOrders.addNewRoom(room);
 
 		MenuItems menuItems = new MenuItems();

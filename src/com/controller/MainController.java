@@ -2,19 +2,24 @@ package com.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.database.Fetch;
 import com.database.GirlsList;
 import com.database.MenuItems;
+import com.database.UpdateRoom;
 import com.model.Girls;
 import com.model.Menu;
 import com.model.Orders;
 
-import javafx.application.Platform;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +40,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class MainController implements Initializable {
 	// Orders Tab
@@ -101,15 +107,37 @@ public class MainController implements Initializable {
 	@FXML
 	private TextField girlsNameInput;
 
+	private int rooms;
+
+	// for end section time
+	private List<String> aryendSection;
+
+	// for room active or not from column active, 1 is true and 0 is false.
+	private List<Integer> aryActive;
+
+	private boolean checkendSection = false;
+
+	private Timeline timeLine = new Timeline();
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		LocalDateTime datetime = LocalDateTime.now();
-		currentDateTime.setText(datetime.format(DateTimeFormatter.ofPattern("dd MMM uuuu - hh:mm:ss a")));
-
 		Fetch fetch = new Fetch();
-		GridPaneSetUp(fetch.getRoom().size());
-//		grid();
+		rooms = fetch.getRoom().size();
+		refreshTime();
+		System.out.println(checkendSection);
+
+		gridPane.setPadding(new Insets(10));
+		gridPane.setHgap(10);
+		gridPane.setVgap(25);
+
+		getActiveStatusAndendSection();
+
+		// adjust the row size for GridPane
+		RowConstraints rowConstraints = new RowConstraints();
+		rowConstraints.setPercentHeight(100.0 / fetch.getRoom().size());
+		gridPane.getRowConstraints().add(rowConstraints);
+
 		// Orders Tab
 		colOrders.setCellValueFactory(new PropertyValueFactory<Orders, String>("name"));
 		colQuantity.setCellValueFactory(new PropertyValueFactory<Orders, Integer>("quantity"));
@@ -120,20 +148,49 @@ public class MainController implements Initializable {
 		menuPrice.setCellValueFactory(new PropertyValueFactory<Menu, Integer>("price"));
 	}
 
+	public void getActiveStatusAndendSection() {
+		Fetch fetch = new Fetch();
+		rooms = fetch.getRoom().size();
+		aryendSection = new ArrayList<>();
+		aryActive = new ArrayList<>();
+
+		for (int i = 1; i <= rooms; i++) {
+			aryendSection.add(fetch.getendSection(i));
+			aryActive.add(fetch.getActiveStatus(i));
+			System.out.println(fetch.getendSection(i));
+		}
+	}
+
+	public void refreshTime() {
+		timeLine.getKeyFrames().clear();
+		timeLine.getKeyFrames().add(new KeyFrame(Duration.seconds(1), event -> {
+			LocalDateTime datetime = LocalDateTime.now();
+			currentDateTime.setText(datetime.format(DateTimeFormatter.ofPattern("dd MMM uuuu - hh:mm a")));
+			GridPaneSetUp(rooms);
+			if (checkendSection) {
+				PauseTransition pause = new PauseTransition(Duration.minutes(1));
+				pause.setOnFinished(e -> {
+					// Code to execute after the delay
+					// For example, resume the timeline
+					checkendSection = false;
+					timeLine.play();
+				});
+				pause.play();
+				timeLine.pause(); // Pause the timeline during the delay
+			}
+		}));
+		timeLine.setCycleCount(Animation.INDEFINITE);
+		timeLine.play();
+	}
+
 	public void GridPaneSetUp(int rooms) {
 		Fetch fetch = new Fetch();
-		gridPane.setPadding(new Insets(10));
-		gridPane.setHgap(10);
-		gridPane.setVgap(30);
-
+		UpdateRoom updateRoom = new UpdateRoom();
 		int numCols = 2;
 		int numRows = (rooms + numCols - 1) / numCols;
 
 		int i = 1;
 		for (int row = 0; row < numRows; row++) {
-			RowConstraints rowConstraints = new RowConstraints();
-			rowConstraints.setPercentHeight(100.0 / fetch.getRoom().size());
-			gridPane.getRowConstraints().add(rowConstraints);
 			for (int col = 0; col < numCols; col++) {
 				if (i > rooms) {
 					break; // Stop adding buttons if we have reached the total number of rooms
@@ -141,9 +198,29 @@ public class MainController implements Initializable {
 				Button button = new Button(String.valueOf(i));
 				button.setPrefWidth(40);
 				button.setPrefHeight(40);
-				if (fetch.getActiveStatus(Integer.valueOf(button.getText())) == 1) {
-					button.setStyle("-fx-background-color: #00fc17;");
-				} else if (fetch.getActiveStatus(Integer.valueOf(button.getText())) == 0) {
+				button.setStyle("-fx-background-color: #00fc17;");
+
+				// this string is end section time get from mysql table and put it as in array
+				// list.
+//				System.out.println("count - " + aryendSection.get(Integer.valueOf(button.getText())-1));
+				String endSec = aryendSection.get(Integer.valueOf(button.getText()) - 1);
+				int activeStatus = aryActive.get(Integer.valueOf(button.getText()) - 1);
+
+				if (endSec.equals(currentDateTime.getText())) {
+					button.setStyle("-fx-background-color: #ff0000;");
+					if (!checkendSection) {
+						if (activeStatus == 1) {
+							updateRoom.updateActiveStatus(0, i);
+							getActiveStatusAndendSection();
+							button.setStyle("-fx-background-color: #ff0000;");
+						}
+						System.out.println("end - " + endSec + currentDateTime.getText());
+						System.out.println("button - " + i);
+						checkendSection = true;
+					}
+				}
+
+				if (activeStatus == 0) {
 					button.setStyle("-fx-background-color: #ff0000;");
 				}
 				gridPane.add(button, col, row);

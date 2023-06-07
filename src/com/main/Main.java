@@ -24,4 +24,11 @@ public class Main extends Application {
 		primaryStage.setTitle("Managment System");
 		primaryStage.show();
 	}
+	
+	@Override
+	public void init() throws Exception {
+		// TODO Auto-generated method stub
+		super.init();
+		System.out.println("init");
+	}
 }

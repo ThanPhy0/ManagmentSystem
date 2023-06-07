@@ -53,9 +53,25 @@ public class Fetch {
 		String obDate = null;
 		try {
 			ResultSet rs = mysqlDB.executeQuery(
-					"select Date_format(date_time, \"%Y-%m-%d %h:%i:%s %p\") as date_time from room where id = " + id);
+					"select Date_format(date_time, \"%e %M %Y - %h:%i:%s %p\") as date_time from room where id = "
+							+ id);
 			while (rs.next()) {
 				obDate = rs.getString("date_time");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return obDate;
+	}
+
+	public String getendSection(int id) {
+		mysqlDB = new MySqlDB();
+		String obDate = null;
+		try {
+			ResultSet rs = mysqlDB.executeQuery("select end_section from room where id = " + id);
+			while (rs.next()) {
+				obDate = rs.getString("end_section");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

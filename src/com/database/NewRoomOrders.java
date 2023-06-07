@@ -1,6 +1,5 @@
 package com.database;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -15,11 +14,10 @@ public class NewRoomOrders {
 		mysqlDB = new MySqlDB();
 		try {
 			prepStmt = mysqlDB
-					.insertQuery("insert into room (room, person_count, section, date_time) values (?,?,?,?)");
+					.insertQuery("insert into room (room, person_count, section, date_time) values (?,?,?,Now())");
 			prepStmt.setInt(1, room.getRoom());
 			prepStmt.setInt(2, room.getPersonCount());
 			prepStmt.setInt(3, room.getSection());
-			prepStmt.setDate(4, Date.valueOf(room.getDate()));
 			prepStmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="532.0" prefWidth="785.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.MenuController">
+   <children>
+      <TableView fx:id="tableMenu" layoutX="31.0" layoutY="31.0" prefHeight="470.0" prefWidth="332.0">
+         <columns>
+            <TableColumn fx:id="menuName" prefWidth="206.0" text="Name" />
+            <TableColumn fx:id="menuPrice" minWidth="0.0" prefWidth="125.0" text="Price" />
+         </columns>
+      </TableView>
+      <Button layoutX="642.0" layoutY="183.0" mnemonicParsing="false" onAction="#insertNewMenu" prefHeight="26.0" prefWidth="60.0" text="Add" />
+      <Button layoutX="556.0" layoutY="183.0" mnemonicParsing="false" onAction="#updateMenuItem" prefHeight="26.0" prefWidth="73.0" text="Update" />
+      <TextField fx:id="menuNameInput" layoutX="482.0" layoutY="102.0" prefHeight="26.0" prefWidth="220.0" promptText="Name" />
+      <TextField fx:id="menuPriceInput" layoutX="482.0" layoutY="140.0" prefHeight="26.0" prefWidth="220.0" promptText="Price" />
+      <Button layoutX="374.0" layoutY="475.0" mnemonicParsing="false" onAction="#editMenuItem" prefHeight="26.0" prefWidth="73.0" text="Edit" />
+   </children>
+</AnchorPane>

@@ -87,30 +87,7 @@ public class MainController implements Initializable {
 
 	// Menu Tab
 
-	@FXML
-	private Tab menuTab;
-
-	@FXML
-	private TableView<Menu> tableMenu;
-
-	@FXML
-	private TableColumn<Menu, String> menuName;
-
-	@FXML
-	private TableColumn<Menu, Integer> menuPrice;
-
-	@FXML
-	private TextField menuNameInput;
-
-	@FXML
-	private TextField menuPriceInput;
-
 	// Girls Tab
-	@FXML
-	private ListView<String> girls;
-
-	@FXML
-	private TextField girlsNameInput;
 
 	private int rooms;
 
@@ -150,8 +127,7 @@ public class MainController implements Initializable {
 		colPrice.setCellValueFactory(new PropertyValueFactory<Orders, Integer>("price"));
 
 		// Menu Tab
-		menuName.setCellValueFactory(new PropertyValueFactory<Menu, String>("name"));
-		menuPrice.setCellValueFactory(new PropertyValueFactory<Menu, Integer>("price"));
+
 	}
 
 	public void getActiveStatusAndendSection() {
@@ -222,7 +198,7 @@ public class MainController implements Initializable {
 				int activeStatus = aryActive.get(Integer.valueOf(button.getText()) - 1);
 
 				if (endSec.equals(untilFiveMin())) {
-					showNotification("Room " + i + "will end in next 5 minutes!");
+					showNotification("Room " + i + " will end in next 5 minutes!");
 				}
 
 				if (endSec.equals(currentDateTime.getText())) {
@@ -263,7 +239,8 @@ public class MainController implements Initializable {
 
 	public void showNotification(String end) {
 		notiForm.setVisible(true);
-		notiForm.setStyle("-fx-background-color: #ff0000;");
+		notiForm.setStyle("-fx-background-color: #4287f5;");
+		notiForm.setStyle("-fx-background-radius: 30;");
 		showMessage.setText(end);
 
 		Timeline tl = new Timeline(new KeyFrame(Duration.minutes(1), event -> notiForm.setVisible(false)));
@@ -292,83 +269,6 @@ public class MainController implements Initializable {
 		}
 	}
 
-	// Menu Tab
-	public void setMenuTab() {
-		MenuItems menuItems = new MenuItems();
-		ObservableList<Menu> obMenu = menuItems.setMenu();
-		tableMenu.setItems(obMenu);
-	}
-
-	public void insertNewMenu() {
-		if (menuNameInput.getText().isEmpty() || menuPriceInput.getText().isEmpty()) {
-			System.out.println("Insert menu name and price!");
-		} else {
-			MenuItems menuItems = new MenuItems();
-			Menu menu = new Menu();
-			menu.setName(menuNameInput.getText().toString());
-			menu.setPrice(Integer.valueOf(menuPriceInput.getText()));
-			menuItems.add(menu);
-		}
-	}
-
-	public void editMenuItem() {
-		if (tableMenu.getSelectionModel().getSelectedItem() == null) {
-			System.out.println("select item first!");
-		} else {
-			menuNameInput.setText(tableMenu.getSelectionModel().getSelectedItem().getName());
-			menuPriceInput.setText(String.valueOf(tableMenu.getSelectionModel().getSelectedItem().getPrice()));
-		}
-	}
-
-	public void updateMenuItem() {
-		if (menuNameInput.getText().isEmpty() || menuPriceInput.getText().isEmpty()) {
-			System.out.println("chose item and click edit button!");
-		} else {
-			String listItemName = tableMenu.getSelectionModel().getSelectedItem().getName();
-			MenuItems menuItems = new MenuItems();
-			Menu menu = new Menu();
-			menu.setName(menuNameInput.getText().toString());
-			menu.setPrice(Integer.valueOf(menuPriceInput.getText()));
-			menuItems.edit(menu, listItemName);
-		}
-	}
-
 	// Girls Tab
-	public void setGirlsTab() {
-		GirlsList girlsList = new GirlsList();
-		ObservableList<String> obGirls = girlsList.listGirls();
-		girls.setItems(obGirls);
-	}
-
-	public void insertNewGirls() {
-		if (girlsNameInput.getText().isEmpty()) {
-			System.out.println("Insert Girl Name!");
-		} else {
-			GirlsList girlsList = new GirlsList();
-			Girls girls = new Girls();
-			girls.setName(girlsNameInput.getText().toString());
-			girlsList.add(girls);
-		}
-	}
-
-	public void editGirlsItem() {
-		if (girls.getSelectionModel().getSelectedItem() == null) {
-			System.out.println("select item first!");
-		} else {
-			girlsNameInput.setText(girls.getSelectionModel().getSelectedItem());
-		}
-	}
-
-	public void updateGirlsItem() {
-		if (girlsNameInput.getText().isEmpty()) {
-			System.out.println("chose item and click edit button!");
-		} else {
-			String listItemName = girls.getSelectionModel().getSelectedItem();
-			GirlsList girlsList = new GirlsList();
-			Girls girls = new Girls();
-			girls.setName(girlsNameInput.getText().toString());
-			girlsList.edit(girls, listItemName);
-		}
-	}
 
 }

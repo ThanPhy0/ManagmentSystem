@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="743.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.GirlsController">
+   <children>
+      <Button layoutX="592.0" layoutY="189.0" mnemonicParsing="false" onAction="#insertNewGirls" prefHeight="26.0" prefWidth="60.0" text="Add" />
+      <Button layoutX="502.0" layoutY="189.0" mnemonicParsing="false" onAction="#updateGirlsItem" prefHeight="26.0" prefWidth="77.0" text="Update" />
+      <ListView fx:id="girls" layoutX="36.0" layoutY="33.0" prefHeight="467.0" prefWidth="260.0" />
+      <TextField fx:id="girlsNameInput" layoutX="469.0" layoutY="140.0" prefHeight="26.0" prefWidth="233.0" promptText="Name" />
+      <Button layoutX="307.0" layoutY="474.0" mnemonicParsing="false" onAction="#editGirlsItem" prefHeight="26.0" prefWidth="63.0" text="Edit" />
+   </children>
+</AnchorPane>

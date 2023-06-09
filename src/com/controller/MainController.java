@@ -29,7 +29,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -38,11 +37,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class MainController implements Initializable {
+	// For Noti
+	@FXML
+	private AnchorPane notiForm;
+
+	@FXML
+	private Label showMessage;
+
 	// Orders Tab
 	@FXML
 	private GridPane gridPane;
@@ -115,6 +120,7 @@ public class MainController implements Initializable {
 	// for room active or not from column active, 1 is true and 0 is false.
 	private List<Integer> aryActive;
 
+	// for section end time
 	private boolean checkendSection = false;
 
 	private Timeline timeLine = new Timeline();
@@ -161,6 +167,14 @@ public class MainController implements Initializable {
 		}
 	}
 
+	public String untilFiveMin() {
+		LocalDateTime dt = LocalDateTime.now();
+		LocalDateTime minusFiveMin = dt.minusMinutes(5);
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd MMM uuuu - hh:mm a");
+		String fiveMinMinus = minusFiveMin.format(format);
+		return fiveMinMinus;
+	}
+
 	public void refreshTime() {
 		timeLine.getKeyFrames().clear();
 		timeLine.getKeyFrames().add(new KeyFrame(Duration.seconds(1), event -> {
@@ -186,6 +200,7 @@ public class MainController implements Initializable {
 	public void GridPaneSetUp(int rooms) {
 		Fetch fetch = new Fetch();
 		UpdateRoom updateRoom = new UpdateRoom();
+
 		int numCols = 2;
 		int numRows = (rooms + numCols - 1) / numCols;
 
@@ -205,6 +220,10 @@ public class MainController implements Initializable {
 //				System.out.println("count - " + aryendSection.get(Integer.valueOf(button.getText())-1));
 				String endSec = aryendSection.get(Integer.valueOf(button.getText()) - 1);
 				int activeStatus = aryActive.get(Integer.valueOf(button.getText()) - 1);
+
+				if (endSec.equals(untilFiveMin())) {
+					showNotification("Room " + i + "will end in next 5 minutes!");
+				}
 
 				if (endSec.equals(currentDateTime.getText())) {
 					button.setStyle("-fx-background-color: #ff0000;");
@@ -242,24 +261,19 @@ public class MainController implements Initializable {
 		}
 	}
 
-	public void grid() {
-		gridPane.setPadding(new Insets(10));
-		gridPane.setHgap(10);
-		gridPane.setVgap(10);
+	public void showNotification(String end) {
+		notiForm.setVisible(true);
+		notiForm.setStyle("-fx-background-color: #ff0000;");
+		showMessage.setText(end);
 
-		VBox vBox = new VBox();
-		vBox.setSpacing(10);
+		Timeline tl = new Timeline(new KeyFrame(Duration.minutes(1), event -> notiForm.setVisible(false)));
+		timeLine.setCycleCount(Animation.INDEFINITE);
+		tl.play();
 
-		int a = 0;
-		for (int i = 0; i < 6; i++) {
-			Button btn = new Button(String.valueOf(a));
-			vBox.getChildren().add(btn);
+	}
 
-			ScrollPane scrollPane = new ScrollPane(vBox);
-			scrollPane.setFitToHeight(true);
+	public void checkOut() {
 
-			gridPane.add(scrollPane, 0, 0);
-		}
 	}
 
 	public void newRoom() {

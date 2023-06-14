@@ -44,6 +44,9 @@ import javafx.scene.layout.RowConstraints;
 import javafx.util.Duration;
 
 public class MainController implements Initializable {
+	@FXML
+	private AnchorPane mainAnchor;
+
 	// For Noti
 	@FXML
 	private AnchorPane notiForm;
@@ -350,34 +353,43 @@ public class MainController implements Initializable {
 	}
 
 	public void saveNewRoom() {
-		FormController formController = new FormController();
-//		NewRoomOrders takeRoom = new NewRoomOrders();
-//		Room r = new Room();
-//		NewOrder nOrder = new NewOrder();
-//		r.setPersonCount(person.getValue());
-//		r.setSection(sectionTime.getValue());
-//		r.setActiveStatus(0);
-//		r.setEndSection(addSecHour(sectionTime.getValue()));
-//		takeRoom.updateRoom(r, Integer.valueOf(room.getText()));
-//
-//		MenuItems menuItem = new MenuItems();
-//		GirlsList gList = new GirlsList();
-//		for (int i = 0; i < orderTable.getItems().size(); i++) {
-//			int id = menuItem.getMenuId(colOrders.getCellData(i));
-//			nOrder.setRoom(Integer.valueOf(room.getText()));
-//			nOrder.setMenu(id);
-//			nOrder.setQuantity(colPrice.getCellData(i));
-//			takeRoom.addNewOrder(nOrder);
-//			System.out.println(nOrder);
-//		}
-//		for (String out : listGirls.getItems()) {
-//			int girlsId = gList.getGirlId(out);
-//			nOrder.setRoom(Integer.valueOf(room.getText()));
-//			nOrder.setGirlsId(girlsId);
-//			takeRoom.addInviteGirls(nOrder);
-//		}
-		ActionEvent event = new ActionEvent();
-		formController.dashboardPane(event);
+		NewRoomOrders takeRoom = new NewRoomOrders();
+		Room r = new Room();
+		NewOrder nOrder = new NewOrder();
+		r.setPersonCount(person.getValue());
+		r.setSection(sectionTime.getValue());
+		r.setActiveStatus(0);
+		r.setEndSection(addSecHour(sectionTime.getValue()));
+		takeRoom.updateRoom(r, Integer.valueOf(room.getText()));
+
+		MenuItems menuItem = new MenuItems();
+		GirlsList gList = new GirlsList();
+		for (int i = 0; i < orderTable.getItems().size(); i++) {
+			int id = menuItem.getMenuId(colOrders.getCellData(i));
+			nOrder.setRoom(Integer.valueOf(room.getText()));
+			nOrder.setMenu(id);
+			nOrder.setQuantity(colPrice.getCellData(i));
+			takeRoom.addNewOrder(nOrder);
+			System.out.println(nOrder);
+		}
+		for (String out : listGirls.getItems()) {
+			int girlsId = gList.getGirlId(out);
+			nOrder.setRoom(Integer.valueOf(room.getText()));
+			nOrder.setGirlsId(girlsId);
+			takeRoom.addInviteGirls(nOrder);
+		}
+		refreshMainController();
 		System.out.println(room);
+	}
+
+	// for refresh after click take exist room
+	public void refreshMainController() {
+		System.out.println(checkendSection);
+		int roomNumber = Integer.valueOf(room.getText());
+		String dateAndtime = String.valueOf(fetch.setDateTime(roomNumber));
+		setDashboard();
+		takeExistRoom();
+		fetch.setRecord(roomNumber, room, personCount, section);
+		datetime.setText(dateAndtime);
 	}
 }

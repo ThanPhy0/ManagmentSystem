@@ -2,10 +2,13 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="894.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="853.0" prefWidth="894.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.MainController">
 	<children>
 		<Label fx:id="currentDateTime" alignment="CENTER" contentDisplay="CENTER" layoutX="542.0" layoutY="14.0" prefHeight="29.0" prefWidth="338.0" text="Date Time" textFill="#0310fc">
 			<font>
@@ -30,7 +33,6 @@
 				<TableColumn fx:id="colPrice" prefWidth="116.0" text="Price" />
 			</columns>
 		</TableView>
-		<Button layoutX="754.0" layoutY="476.0" mnemonicParsing="false" onAction="#newRoom" prefHeight="48.0" prefWidth="94.0" text="New" />
 		<GridPane fx:id="gridPane" layoutX="33.0" layoutY="68.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="268.0" prefWidth="136.0" AnchorPane.bottomAnchor="392.0" AnchorPane.topAnchor="68.0">
 			<columnConstraints>
 				<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="10.0" />
@@ -50,62 +52,94 @@
 				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 			</rowConstraints>
 		</GridPane>
-		<Button layoutX="754.0" layoutY="418.0" mnemonicParsing="false" onAction="#checkOut" prefHeight="48.0" prefWidth="94.0" text="Show Noti" />
-		<AnchorPane fx:id="notiForm" layoutX="278.0" layoutY="442.0" prefHeight="95.0" prefWidth="299.0">
+		<Button layoutX="754.0" layoutY="418.0" mnemonicParsing="false" onAction="#checkOut" prefHeight="37.0" prefWidth="94.0" style="-fx-background-color: RED;" text="Check Out" textFill="WHITE" />
+		<AnchorPane fx:id="notiForm" layoutX="27.0" layoutY="414.0" prefHeight="50.0" prefWidth="363.0">
 			<children>
 				<Label fx:id="showMessage" layoutX="58.0" layoutY="32.0" prefHeight="16.0" prefWidth="305.0" text="Label -" />
 			</children>
 		</AnchorPane>
-      <HBox alignment="CENTER" layoutX="242.0" layoutY="54.0" prefHeight="69.0" prefWidth="700.0">
-         <children>
-            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/room.png" />
-               </image>
-               <HBox.margin>
-                  <Insets left="10.0" right="10.0" />
-               </HBox.margin>
-            </ImageView>
-            <Label fx:id="room" prefHeight="50.0" prefWidth="50.0" text="0" textFill="#d09112">
-               <font>
-                  <Font size="25.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/person.png" />
-               </image>
-               <HBox.margin>
-                  <Insets left="10.0" right="10.0" />
-               </HBox.margin>
-            </ImageView>
-            <Label fx:id="personCount" prefHeight="50.0" prefWidth="50.0" text="0" textFill="#127fcd">
-               <font>
-                  <Font name="Ubuntu" size="25.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/section.png" />
-               </image>
-               <HBox.margin>
-                  <Insets left="10.0" right="10.0" />
-               </HBox.margin>
-            </ImageView>
-            <Label fx:id="section" prefHeight="50.0" prefWidth="50.0" text="0" textFill="#e40606">
-               <font>
-                  <Font name="Ubuntu" size="25.0" />
-               </font>
-            </Label>
-            <Label fx:id="datetime" prefHeight="20.0" prefWidth="280.0" text="Date Time" textFill="#a401f5">
-               <font>
-                  <Font name="Ubuntu" size="20.0" />
-               </font>
-            </Label>
-         </children>
-         <padding>
-            <Insets left="10.0" right="10.0" />
-         </padding>
-      </HBox>
+		<HBox alignment="CENTER" layoutX="242.0" layoutY="54.0" prefHeight="69.0" prefWidth="700.0">
+			<children>
+				<ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+					<image>
+						<Image url="@../../images/room.png" />
+					</image>
+					<HBox.margin>
+						<Insets left="10.0" right="10.0" />
+					</HBox.margin>
+				</ImageView>
+				<Label fx:id="room" prefHeight="50.0" prefWidth="50.0" text="0" textFill="#d09112">
+					<font>
+						<Font size="25.0" />
+					</font>
+				</Label>
+				<ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+					<image>
+						<Image url="@../../images/person.png" />
+					</image>
+					<HBox.margin>
+						<Insets left="10.0" right="10.0" />
+					</HBox.margin>
+				</ImageView>
+				<Label fx:id="personCount" prefHeight="50.0" prefWidth="50.0" text="0" textFill="#127fcd">
+					<font>
+						<Font name="Ubuntu" size="25.0" />
+					</font>
+				</Label>
+				<ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+					<image>
+						<Image url="@../../images/section.png" />
+					</image>
+					<HBox.margin>
+						<Insets left="10.0" right="10.0" />
+					</HBox.margin>
+				</ImageView>
+				<Label fx:id="section" prefHeight="50.0" prefWidth="50.0" text="0" textFill="#e40606">
+					<font>
+						<Font name="Ubuntu" size="25.0" />
+					</font>
+				</Label>
+				<Label fx:id="datetime" prefHeight="20.0" prefWidth="280.0" text="Date Time" textFill="#a401f5">
+					<font>
+						<Font name="Ubuntu" size="20.0" />
+					</font>
+				</Label>
+			</children>
+			<padding>
+				<Insets left="10.0" right="10.0" />
+			</padding>
+		</HBox>
+		<AnchorPane fx:id="getRoomAnchor" layoutX="237.0" layoutY="471.0" prefHeight="236.0" prefWidth="624.0">
+			<children>
+				<ComboBox fx:id="person" layoutX="27.0" layoutY="51.0" prefHeight="26.0" prefWidth="120.0" />
+				<Label layoutX="27.0" layoutY="31.0" prefHeight="20.0" prefWidth="104.0" text="Person :">
+					<font>
+						<Font size="16.0" />
+					</font>
+				</Label>
+				<Label layoutX="179.0" layoutY="31.0" prefHeight="20.0" prefWidth="104.0" text="Section :">
+					<font>
+						<Font size="16.0" />
+					</font>
+				</Label>
+				<Spinner fx:id="sectionTime" layoutX="183.0" layoutY="51.0" prefHeight="26.0" prefWidth="83.0" />
+				<Label layoutX="307.0" layoutY="31.0" prefHeight="20.0" prefWidth="83.0" text="Menu :">
+					<font>
+						<Font size="16.0" />
+					</font>
+				</Label>
+				<Label layoutX="451.0" layoutY="31.0" prefHeight="20.0" prefWidth="104.0" text="Girls :">
+					<font>
+						<Font size="16.0" />
+					</font>
+				</Label>
+				<Button layoutX="474.0" layoutY="170.0" mnemonicParsing="false" onAction="#saveNewRoom" prefHeight="37.0" prefWidth="136.0" text="Save" />
+				<ComboBox fx:id="menuNames" layoutX="308.0" layoutY="51.0" prefHeight="26.0" prefWidth="120.0" />
+				<TextField fx:id="orderQuantity" layoutX="308.0" layoutY="84.0" prefHeight="26.0" prefWidth="120.0" />
+				<Button layoutX="312.0" layoutY="118.0" mnemonicParsing="false" onAction="#ordersAdd" prefHeight="26.0" prefWidth="113.0" text="Add" />
+				<ComboBox fx:id="girlNames" layoutX="451.0" layoutY="51.0" prefHeight="26.0" prefWidth="120.0" />
+				<Button layoutX="451.0" layoutY="84.0" mnemonicParsing="false" onAction="#girlsAdd" prefHeight="26.0" prefWidth="120.0" text="Add" />
+			</children>
+		</AnchorPane>
 	</children>
 </AnchorPane>

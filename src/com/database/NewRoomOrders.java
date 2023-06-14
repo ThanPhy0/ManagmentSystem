@@ -25,6 +25,25 @@ public class NewRoomOrders {
 		}
 	}
 
+	// For take exist room
+	public void updateRoom(Room room, int roomId) {
+		mysqlDB = new MySqlDB();
+		try {
+			prepStmt = mysqlDB.insertQuery(
+					"update room set person_count=?, section=?, date_time=Now(), active=?, end_section=? where room=?");
+			prepStmt.setInt(1, room.getPersonCount());
+			prepStmt.setInt(2, room.getSection());
+			prepStmt.setInt(3, room.getActiveStatus());
+			prepStmt.setString(4, room.getEndSection());
+			prepStmt.setInt(5, roomId);
+			prepStmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	// This method can use for new room create and take exist room!
 	public void addNewOrder(NewOrder newOrder) {
 		mysqlDB = new MySqlDB();
 		try {
@@ -39,6 +58,7 @@ public class NewRoomOrders {
 		}
 	}
 
+	// This method can use for new room create and take exist room!
 	public void addInviteGirls(NewOrder newOrder) {
 		mysqlDB = new MySqlDB();
 		try {

@@ -6,7 +6,9 @@ public class Room {
 	private int room;
 	private int personCount;
 	private int section;
+	private int activeStatus;
 	private LocalDate date;
+	private String endSection;
 
 	public int getRoom() {
 		return room;
@@ -38,6 +40,28 @@ public class Room {
 
 	public void setDate(LocalDate date) {
 		this.date = date;
+	}
+
+	public int getActiveStatus() {
+		return activeStatus;
+	}
+
+	public void setActiveStatus(int activeStatus) {
+		this.activeStatus = activeStatus;
+	}
+
+	public String getEndSection() {
+		return endSection;
+	}
+
+	public void setEndSection(String endSection) {
+		this.endSection = endSection;
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return personCount + " - " + section + " - " + activeStatus + " - " + endSection;
 	}
 
 }

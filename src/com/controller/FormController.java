@@ -101,4 +101,9 @@ public class FormController implements Initializable {
 	public void girlsPane(ActionEvent event) {
 		showUI("girls.fxml");
 	}
+
+	@FXML
+	public void newRoom(ActionEvent event) {
+		showUI("new_room.fxml");
+	}
 }

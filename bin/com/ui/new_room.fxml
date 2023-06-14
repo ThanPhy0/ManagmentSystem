@@ -66,7 +66,7 @@
 		</Label>
 		<ComboBox fx:id="menuNames" layoutX="33.0" layoutY="233.0" prefHeight="26.0" prefWidth="120.0" />
 		<TextField fx:id="orderQuantity" layoutX="157.0" layoutY="233.0" prefHeight="26.0" prefWidth="70.0" />
-		<Button layoutX="234.0" layoutY="235.0" mnemonicParsing="false" onAction="#orderAdd" prefHeight="26.0" prefWidth="63.0" text="Add" />
+		<Button layoutX="234.0" layoutY="235.0" mnemonicParsing="false" onAction="#ordersAdd" prefHeight="26.0" prefWidth="63.0" text="Add" />
 		<ComboBox fx:id="girlNames" layoutX="32.0" layoutY="299.0" prefHeight="26.0" prefWidth="120.0" />
 		<Button layoutX="162.0" layoutY="299.0" mnemonicParsing="false" onAction="#girlsAdd" prefHeight="26.0" prefWidth="63.0" text="Add" />
 	</children>

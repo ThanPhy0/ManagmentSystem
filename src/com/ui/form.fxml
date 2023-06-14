@@ -128,6 +128,18 @@
                               <Insets left="10.0" right="10.0" />
                            </VBox.margin>
                         </Button>
+                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#newRoom" prefHeight="38.0" prefWidth="176.0" style="-fx-background-color: #0a4969;" styleClass="sidebarItem" text="New Room" textFill="WHITE">
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/data.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </VBox.margin>
+                        </Button>
                         <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="38.0" prefWidth="176.0" style="-fx-background-color: #0a4969;" styleClass="sidebarItem" text="About" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">

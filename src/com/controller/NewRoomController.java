@@ -141,7 +141,7 @@ public class NewRoomController implements Initializable {
 		}
 	}
 
-	public void orderAdd() {
+	public void ordersAdd() {
 		Menu selectedItem = menuNames.getSelectionModel().getSelectedItem();
 		if (menuNames != null) {
 			String name = selectedItem.toString();

@@ -1,6 +1,5 @@
 package com.controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -8,28 +7,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import com.database.CheckOut;
 import com.database.Fetch;
 import com.database.GirlsList;
 import com.database.MenuItems;
+import com.database.NewRoomOrders;
 import com.database.UpdateRoom;
-import com.model.Girls;
 import com.model.Menu;
+import com.model.NewOrder;
 import com.model.Orders;
+import com.model.Room;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Tab;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -37,7 +41,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class MainController implements Initializable {
@@ -85,10 +88,26 @@ public class MainController implements Initializable {
 	@FXML
 	private ListView<String> listGirls;
 
-	// Menu Tab
+	// For Take Room
+	@FXML
+	private AnchorPane getRoomAnchor;
 
-	// Girls Tab
+	@FXML
+	private ComboBox<Integer> person;
 
+	@FXML
+	private Spinner<Integer> sectionTime;
+
+	@FXML
+	private ComboBox<Menu> menuNames;
+
+	@FXML
+	private ComboBox<String> girlNames;
+
+	@FXML
+	private TextField orderQuantity;
+
+	// Get room nubmer
 	private int rooms;
 
 	// for end section time
@@ -102,13 +121,25 @@ public class MainController implements Initializable {
 
 	private Timeline timeLine = new Timeline();
 
+	private Fetch fetch = new Fetch();
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		Fetch fetch = new Fetch();
+		setUI();
+	}
+
+	public void setUI() {
 		rooms = fetch.getRoom().size();
 		refreshTime();
 		System.out.println(checkendSection);
+
+		setDashboard();
+		takeExistRoom();
+	}
+
+	public void setDashboard() {
+		getRoomAnchor.setVisible(false);
 
 		gridPane.setPadding(new Insets(10));
 		gridPane.setHgap(10);
@@ -126,8 +157,28 @@ public class MainController implements Initializable {
 		colQuantity.setCellValueFactory(new PropertyValueFactory<Orders, Integer>("quantity"));
 		colPrice.setCellValueFactory(new PropertyValueFactory<Orders, Integer>("price"));
 
-		// Menu Tab
+	}
 
+	public void takeExistRoom() {
+		MenuItems menuItems = new MenuItems();
+		GirlsList gList = new GirlsList();
+
+		// Person Count
+		ObservableList<Integer> obPerson = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+		person.setItems(obPerson);
+
+		// Section Time
+		ObservableList<Integer> obSection = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+		SpinnerValueFactory<Integer> value = new SpinnerValueFactory.ListSpinnerValueFactory<>(obSection);
+		sectionTime.setValueFactory(value);
+
+		// Menu Items
+		ObservableList<Menu> obMite = menuItems.setMenu();
+		menuNames.setItems(obMite);
+
+		// Girls List
+		ObservableList<String> girlsList = gList.listGirls();
+		girlNames.setItems(girlsList);
 	}
 
 	public void getActiveStatusAndendSection() {
@@ -149,6 +200,14 @@ public class MainController implements Initializable {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd MMM uuuu - hh:mm a");
 		String fiveMinMinus = minusFiveMin.format(format);
 		return fiveMinMinus;
+	}
+
+	public String addSecHour(int hour) {
+		LocalDateTime dt = LocalDateTime.now();
+		LocalDateTime minusFiveMin = dt.plusHours(hour);
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd MMM uuuu - hh:mm a");
+		String plusHour = minusFiveMin.format(format);
+		return plusHour;
 	}
 
 	public void refreshTime() {
@@ -223,7 +282,13 @@ public class MainController implements Initializable {
 					if (event.getClickCount() == 2) {
 						int btnId = Integer.valueOf(button.getText());
 						System.out.println(button.getText());
-						datetime.setText(String.valueOf(fetch.setDateTime(btnId)));
+						if (activeStatus == 1) {
+							datetime.setText("00:00:00");
+							getRoomAnchor.setVisible(true);
+						} else if (activeStatus == 0) {
+							datetime.setText(String.valueOf(fetch.setDateTime(btnId)));
+							getRoomAnchor.setVisible(false);
+						}
 						fetch.setRecord(btnId, room, personCount, section);
 						ObservableList<Orders> obOrders = fetch.setOrders(btnId);
 						ObservableList<String> obGirls = fetch.setGirls(btnId);
@@ -250,25 +315,69 @@ public class MainController implements Initializable {
 	}
 
 	public void checkOut() {
-
+		CheckOut checkOut = new CheckOut();
+		int roomId = Integer.valueOf(room.getText());
+		checkOut.clearThisRow(roomId);
+		checkOut.deleteOrdersRow(roomId);
+		checkOut.deleteInviteGirlsRow(roomId);
 	}
 
-	public void newRoom() {
-		Stage stage = new Stage();
-		try {
-			AnchorPane root = (AnchorPane) FXMLLoader
-					.load(NewRoomController.class.getResource("/com/ui/new_room.fxml"));
-			Scene scene = new Scene(root);
-//			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			stage.setResizable(false);
-			stage.setScene(scene);
-			stage.show();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	// Get new room
+	public void ordersAdd() {
+		Menu selectedItem = menuNames.getSelectionModel().getSelectedItem();
+		if (menuNames != null) {
+			String name = selectedItem.toString();
+			int price = selectedItem.getPriceAsString();
+			int quantity = Integer.valueOf(orderQuantity.getText());
+			Orders order = new Orders(name, quantity, quantity * price);
+			ObservableList<Orders> ob = orderTable.getItems();
+			ob.add(order);
+			orderTable.setItems(ob);
+			orderQuantity.setText("");
+		} else {
+			System.out.println("choose menu!");
 		}
 	}
 
-	// Girls Tab
+	public void girlsAdd() {
+		if (girlNames.getValue() != null) {
+			ObservableList<String> obGirls = listGirls.getItems();
+			obGirls.add(girlNames.getValue());
+			listGirls.setItems(obGirls);
+		} else {
+			System.out.println("Choose girl first!");
+		}
+	}
 
+	public void saveNewRoom() {
+		FormController formController = new FormController();
+//		NewRoomOrders takeRoom = new NewRoomOrders();
+//		Room r = new Room();
+//		NewOrder nOrder = new NewOrder();
+//		r.setPersonCount(person.getValue());
+//		r.setSection(sectionTime.getValue());
+//		r.setActiveStatus(0);
+//		r.setEndSection(addSecHour(sectionTime.getValue()));
+//		takeRoom.updateRoom(r, Integer.valueOf(room.getText()));
+//
+//		MenuItems menuItem = new MenuItems();
+//		GirlsList gList = new GirlsList();
+//		for (int i = 0; i < orderTable.getItems().size(); i++) {
+//			int id = menuItem.getMenuId(colOrders.getCellData(i));
+//			nOrder.setRoom(Integer.valueOf(room.getText()));
+//			nOrder.setMenu(id);
+//			nOrder.setQuantity(colPrice.getCellData(i));
+//			takeRoom.addNewOrder(nOrder);
+//			System.out.println(nOrder);
+//		}
+//		for (String out : listGirls.getItems()) {
+//			int girlsId = gList.getGirlId(out);
+//			nOrder.setRoom(Integer.valueOf(room.getText()));
+//			nOrder.setGirlsId(girlsId);
+//			takeRoom.addInviteGirls(nOrder);
+//		}
+		ActionEvent event = new ActionEvent();
+		formController.dashboardPane(event);
+		System.out.println(room);
+	}
 }

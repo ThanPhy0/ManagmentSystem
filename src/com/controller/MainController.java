@@ -24,7 +24,6 @@ import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -110,6 +109,9 @@ public class MainController implements Initializable {
 	@FXML
 	private TextField orderQuantity;
 
+	@FXML
+	private Button saveNewBtn;
+
 	// Get room nubmer
 	private int rooms;
 
@@ -130,19 +132,6 @@ public class MainController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		setUI();
-	}
-
-	public void setUI() {
-		rooms = fetch.getRoom().size();
-		refreshTime();
-		System.out.println(checkendSection);
-
-		setDashboard();
-		takeExistRoom();
-	}
-
-	public void setDashboard() {
-		getRoomAnchor.setVisible(false);
 
 		gridPane.setPadding(new Insets(10));
 		gridPane.setHgap(10);
@@ -159,6 +148,21 @@ public class MainController implements Initializable {
 		colOrders.setCellValueFactory(new PropertyValueFactory<Orders, String>("name"));
 		colQuantity.setCellValueFactory(new PropertyValueFactory<Orders, Integer>("quantity"));
 		colPrice.setCellValueFactory(new PropertyValueFactory<Orders, Integer>("price"));
+
+	}
+
+	public void setUI() {
+		rooms = fetch.getRoom().size();
+		refreshTime();
+		System.out.println(checkendSection);
+
+		setDashboard();
+		takeExistRoom();
+	}
+
+	public void setDashboard() {
+		getRoomAnchor.setVisible(false);
+		getActiveStatusAndendSection();
 
 	}
 
@@ -323,6 +327,15 @@ public class MainController implements Initializable {
 		checkOut.clearThisRow(roomId);
 		checkOut.deleteOrdersRow(roomId);
 		checkOut.deleteInviteGirlsRow(roomId);
+		refreshMainController();
+		orderTable.getItems().clear();
+		listGirls.getItems().clear();
+		getRoomAnchor.setVisible(true);
+	}
+
+	public void nextOrder() {
+		getRoomAnchor.setVisible(true);
+		saveNewBtn.setText("Update");
 	}
 
 	// Get new room
@@ -355,31 +368,43 @@ public class MainController implements Initializable {
 	public void saveNewRoom() {
 		NewRoomOrders takeRoom = new NewRoomOrders();
 		Room r = new Room();
-		NewOrder nOrder = new NewOrder();
-		r.setPersonCount(person.getValue());
-		r.setSection(sectionTime.getValue());
-		r.setActiveStatus(0);
-		r.setEndSection(addSecHour(sectionTime.getValue()));
-		takeRoom.updateRoom(r, Integer.valueOf(room.getText()));
-
 		MenuItems menuItem = new MenuItems();
 		GirlsList gList = new GirlsList();
-		for (int i = 0; i < orderTable.getItems().size(); i++) {
-			int id = menuItem.getMenuId(colOrders.getCellData(i));
-			nOrder.setRoom(Integer.valueOf(room.getText()));
-			nOrder.setMenu(id);
-			nOrder.setQuantity(colPrice.getCellData(i));
-			takeRoom.addNewOrder(nOrder);
-			System.out.println(nOrder);
+		NewOrder nOrder = new NewOrder();
+		if (saveNewBtn.getText().equals("Save")) {
+			r.setPersonCount(person.getValue());
+			r.setSection(sectionTime.getValue());
+			r.setActiveStatus(0);
+			r.setEndSection(addSecHour(sectionTime.getValue()));
+			takeRoom.updateRoom(r, Integer.valueOf(room.getText()));
+
+			for (int i = 0; i < orderTable.getItems().size(); i++) {
+				int id = menuItem.getMenuId(colOrders.getCellData(i));
+				nOrder.setRoom(Integer.valueOf(room.getText()));
+				nOrder.setMenu(id);
+				nOrder.setQuantity(colQuantity.getCellData(i));
+				takeRoom.addNewOrder(nOrder);
+				System.out.println(nOrder);
+			}
+			for (String out : listGirls.getItems()) {
+				int girlsId = gList.getGirlId(out);
+				nOrder.setRoom(Integer.valueOf(room.getText()));
+				nOrder.setGirlsId(girlsId);
+				takeRoom.addInviteGirls(nOrder);
+			}
+			refreshMainController();
+			System.out.println(room);
+		} else if (saveNewBtn.getText().equals("Update")) {
+			int currentSection = Integer.valueOf(section.getText()) + sectionTime.getValue();
+			int minusAddSecTime = currentSection - Integer.valueOf(section.getText());
+			System.out.println("current sec - " + currentSection);
+			r.setPersonCount(person.getValue());
+			r.setSection(currentSection);
+			r.setActiveStatus(0);
+			r.setEndSection(addSecHour(minusAddSecTime));
+			System.out.println("end sec - " + addSecHour(minusAddSecTime));
+			System.out.println("Update....");
 		}
-		for (String out : listGirls.getItems()) {
-			int girlsId = gList.getGirlId(out);
-			nOrder.setRoom(Integer.valueOf(room.getText()));
-			nOrder.setGirlsId(girlsId);
-			takeRoom.addInviteGirls(nOrder);
-		}
-		refreshMainController();
-		System.out.println(room);
 	}
 
 	// for refresh after click take exist room
@@ -390,6 +415,10 @@ public class MainController implements Initializable {
 		setDashboard();
 		takeExistRoom();
 		fetch.setRecord(roomNumber, room, personCount, section);
-		datetime.setText(dateAndtime);
+		if (dateAndtime != "null") {
+			datetime.setText(dateAndtime);
+		} else {
+			datetime.setText("00:00:00");
+		}
 	}
 }

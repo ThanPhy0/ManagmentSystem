@@ -133,7 +133,7 @@
 						<Font size="16.0" />
 					</font>
 				</Label>
-				<Button layoutX="474.0" layoutY="170.0" mnemonicParsing="false" onAction="#saveNewRoom" prefHeight="37.0" prefWidth="136.0" text="Save" />
+				<Button fx:id="saveNewBtn" layoutX="474.0" layoutY="170.0" mnemonicParsing="false" onAction="#saveNewRoom" prefHeight="37.0" prefWidth="136.0" text="Save" />
 				<ComboBox fx:id="menuNames" layoutX="308.0" layoutY="51.0" prefHeight="26.0" prefWidth="120.0" />
 				<TextField fx:id="orderQuantity" layoutX="308.0" layoutY="84.0" prefHeight="26.0" prefWidth="120.0" />
 				<Button layoutX="312.0" layoutY="118.0" mnemonicParsing="false" onAction="#ordersAdd" prefHeight="26.0" prefWidth="113.0" text="Add" />
@@ -141,5 +141,6 @@
 				<Button layoutX="451.0" layoutY="84.0" mnemonicParsing="false" onAction="#girlsAdd" prefHeight="26.0" prefWidth="120.0" text="Add" />
 			</children>
 		</AnchorPane>
+      <Button layoutX="650.0" layoutY="418.0" mnemonicParsing="false" onAction="#nextOrder" prefHeight="37.0" prefWidth="94.0" style="-fx-background-color: RED;" text="Next Order" textFill="WHITE" />
 	</children>
 </AnchorPane>
